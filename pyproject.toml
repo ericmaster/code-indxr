@@ -26,7 +26,7 @@ local = [
 ]
 
 [tool.setuptools]
-packages = ["src"]
+packages = ["code_indxr"]
 
 [project.scripts]
-code-index = "src.cli:main"
+code-index = "code_indxr.cli:main"

@@ -30,9 +30,9 @@
 - **CLI:** Add new commands by extending `cli.py` and updating the `argparse` subparsers.
 
 ## References
-- [src/cli.py](../src/cli.py): CLI logic, batching, schema
-- [src/embedder.py](../src/embedder.py): Embedding selection and logic
-- [src/core.py](../src/core.py), [src/indexer.py](../src/indexer.py): File discovery, filtering, and reading
+- [code_indxr/cli.py](../src/cli.py): CLI logic, batching, schema
+- [code_indxr/embedder.py](../src/embedder.py): Embedding selection and logic
+- [code_indxr/core.py](../src/core.py), [code_indexer/indexer.py](../src/indexer.py): File discovery, filtering, and reading
 - [README.md](../README.md): Usage examples and install instructions
 
 ---
