@@ -101,7 +101,7 @@ def index_codebase(db_path: str, code_dir: str, table_name: str = "code", embed_
     pbar.close()
     print(f"\n✅ Indexed {total_written} files into '{db_path}'")
 
-def search_code(db_path: str, query: str, table_name: str = "code", limit: int = 5):
+def search_code(db_path: str, query: str, table_name: str = "code", paths_only: bool = False, limit: int = 5, n_lines: int = 16):
     ef = get_embedding_function()
     query_vec = ef([query])[0]
 
@@ -116,12 +116,13 @@ def search_code(db_path: str, query: str, table_name: str = "code", limit: int =
     print("\n🔍 Search Results:\n")
     for _, row in results.iterrows():
         print(f"📄 {row['path']}")
-        print("-" * 60)
-        lines = row["content"].splitlines()
-        print("\n".join(lines[:8]))
-        if len(lines) > 8:
-            print("... (truncated)")
-        print("=" * 60 + "\n")
+        if not paths_only:
+            print("-" * 60)
+            lines = row["content"].splitlines()
+            print("\n".join(lines[:n_lines]))
+            if len(lines) > n_lines:
+                print("... (truncated)")
+            print("=" * 60 + "\n")
 
 def main():
     parser = argparse.ArgumentParser(prog="code-index")
@@ -134,6 +135,8 @@ def main():
     srch = subparsers.add_parser("search", help="Search indexed code")
     srch.add_argument("query", help="Natural language query")
     srch.add_argument("--db", default="./code_index.lancedb", help="LanceDB path")
+    srch.add_argument("--paths-only", action="store_true", help="Show only file paths in results")
+    srch.add_argument("--n-lines", type=int, default=16, help="Number of lines to show in results")
     srch.add_argument("--limit", type=int, default=5)
 
     args = parser.parse_args()
@@ -141,4 +144,4 @@ def main():
     if args.command == "index":
         index_codebase(args.db, args.code_dir)
     elif args.command == "search":
-        search_code(args.db, args.query, limit=args.limit)
+        search_code(args.db, args.query, paths_only=args.paths_only, limit=args.limit, n_lines=args.n_lines)
