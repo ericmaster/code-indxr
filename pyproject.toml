@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "code-indexer"
+version = "0.1.0"
+description = "Local code indexer with LanceDB and semantic search"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Eric Aguayo", email = "ericmaster@nimblersoft.com"}]
+dependencies = [
+    "lancedb>=0.4.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "pandas>=1.5.0",
+    "sentence-transformers>=2.2.0",
+    "torch>=1.13.0",
+]
+requires-python = ">=3.9"
+
+[tool.setuptools]
+packages = ["src"]
+
+[project.scripts]
+code-index = "src.cli:main"
